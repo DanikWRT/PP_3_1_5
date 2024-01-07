@@ -1,11 +1,55 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+
 <head>
-    <title>Spring Security Example</title>
+    <title>Spring Security</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 </head>
-<body>
-<h1>User, welcome spring boot security page!</h1>
 
+<body class="container mt-5">
+<h1>
+    <span>Welcome to the site,</span>
+    <span th:text="${user.getUsername()}">Subtitle</span>
+</h1>
 
+<table class="table">
+    <tr>
+        <th scope="col" class="h5">Your id</th>
+        <th scope="col" class="h5">Your email</th>
+        <th scope="col" class="h5">Your first name</th>
+        <th scope="col" class="h5">Your last name</th>
+    </tr>
+    <tr>
+        <td><p th:text="${user.getId()}" class="h6"> VALUE </p></td>
+        <td><p th:text="${user.getEmail()}" class="h6"> VALUE </p></td>
+        <td><p th:text="${user.getFirstName()}" class="h6"> VALUE </p></td>
+        <td><p th:text="${user.getLastName()}" class="h6"> VALUE </p></td>
+    </tr>
+</table>
+
+<br/>
+<div class="d-flex">
+    <a class="btn btn-primary mr-2" th:href="@{/admin/user/{id}/edit (id=${user.getId()})}">Edit</a>
+    <form th:method="POST" th:action="@{/admin/delete/{id}(id=${user.getId()})}" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+</div>
+<br/>
+<a class="btn btn-secondary" th:href="@{/admin/user}">For admin</a>
+<a class="btn btn-danger" th:href="@{/logout}">Logout</a>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
