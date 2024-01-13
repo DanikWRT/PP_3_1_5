@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 @RestController
 public class MainController {
-    private CustomUserDetailService userService;
+    private CustomUserDetailService customUserDetailService;
     @Autowired
-    public void setUserService(CustomUserDetailService userService) {
-        this.userService = userService;
+    public void setUserService(CustomUserDetailService customUserDetailService) {
+        this.customUserDetailService = customUserDetailService;
     }
 
 //    @GetMapping("/")
@@ -24,7 +24,7 @@ public class MainController {
 //    }
     @GetMapping("/authenticated")
     public String pageForAuthenticatedUsers(Principal principal) {
-        User user = userService.findByUsername(principal.getName());
+        User user = customUserDetailService.findByUsername(principal.getName());
         String userRoles = user.getRoles().stream().map(myEntity -> myEntity.getName()).collect(Collectors.joining(", "));
         return "secured part of web service: " + user.getUsername() + " " + user.getEmail() + " " + userRoles;
     }

@@ -6,20 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.etities.User;
 import ru.kata.spring.boot_security.demo.services.CustomUserDetailService;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.security.Principal;
 
 @Controller
 public class UserController {
-    private final CustomUserDetailService userService;
+    private final UserService userService;
 
-    public UserController(CustomUserDetailService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/user")
     public String showUser(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
+        User user = userService.getUserByName(principal.getName());
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User %s not found", principal.getName()));
         }
