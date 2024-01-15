@@ -43,12 +43,14 @@
         <td th:text="${user.getEmail}"></td>
         <td>
             <a class="btn btn-primary" th:href="@{/admin/user/{id}(id=${user.id})}">Edit User</a>
+            <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
         </td>
         <td>
-            <form th:method="POST" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
-                <input type="hidden" name="_method" value="DELETE"/>
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+<!--            <form th:method="POST" th:action="@{/admin/delete/{id}(id=${user.id})}">-->
+<!--                <input type="hidden" name="_method" value="DELETE"/>-->
+<!--                <button type="submit" class="btn btn-danger">Delete</button>-->
+<!--            </form>-->
+
         </td>
     </tr>
     </tbody>
