@@ -32,9 +32,7 @@
 <br/>
 <div class="d-flex">
     <a class="btn btn-primary mr-2" th:href="@{/admin/user/{id}/edit (id=${user.getId()})}">Edit</a>
-    <form th:method="POST" th:action="@{/admin/delete/{id}(id=${user.getId()})}" class="d-inline">
-        <input type="hidden" name="_method" value="DELETE"/>
-        <button class="btn btn-danger" type="submit">Delete</button>
+    <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
     </form>
 </div>
 <br/>

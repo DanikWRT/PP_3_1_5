@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.etities.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 
+import javax.validation.Valid;
 
 
 @Controller
@@ -39,13 +41,16 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String createNewUser(@ModelAttribute("user") User user, Model model) {
+    public String showAddUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("listRoles", roleService.getListRoles());
         return "new";
     }
 
     @PostMapping("/user")
-    public String create(@ModelAttribute("user") User user) {
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "new";
+        }
         userService.addUser(user);
         return "redirect:/admin/user";
     }
@@ -58,12 +63,15 @@ public class AdminController {
     }
 
     @PostMapping("/user/{id}")
-    public String editUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+    public String editUser(@ModelAttribute("user") @Valid User user, @PathVariable("id") Long id, BindingResult result) {
+        if (result.hasErrors()) {
+            return "edit";
+        }
         userService.editUser(id, user);
         return "redirect:/admin/user";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         this.userService.deleteUser(id);
         return "redirect:/admin/user";

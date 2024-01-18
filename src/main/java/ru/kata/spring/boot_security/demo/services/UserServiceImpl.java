@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +8,11 @@ import ru.kata.spring.boot_security.demo.etities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 
+
 import java.util.List;
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+
     @Transactional
     @Override
     public void addUser(User user) {
@@ -41,17 +43,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
-        this.userRepository.deleteById(userId);
+        userRepository.deleteById(userId);
     }
+
     @Transactional
     @Override
     public void editUser(Long id, User user) {
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
             existingUser.setEmail(user.getEmail());
             existingUser.setRoles(user.getRoles());
-            if(!existingUser.getPassword().equals(user.getPassword())) {
+            if (!existingUser.getPassword().equals(user.getPassword())) {
                 existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             }
         }

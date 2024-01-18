@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.services.CustomUserDetailService;
 
 @Configuration
@@ -20,6 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
     }
+
     @Autowired
     public void setCustomUserDetailService(CustomUserDetailService customUserDetailService) {
         this.customUserDetailService = customUserDetailService;
@@ -42,39 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
-//    @Bean
-//    public JdbcUserDetailsManager users(DataSource dataSource) {
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("{bcrypt}$2a$12$0eu1paEfErPJbSM.OwWgQOQN5ziONfrVrfc1ZAgiDAIV3Mkblphby")
-//                .roles("USER")
-//                .build();
-//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-//        if (jdbcUserDetailsManager.userExists(user.getUsername())) {
-//            jdbcUserDetailsManager.deleteUser(user.getUsername());
-//        }
-//        jdbcUserDetailsManager.createUser(user);
-//        return jdbcUserDetailsManager;
-//    }
-
-//**Конфигурирование  bcrypt пароля, чтобы хранить пароль в базе в зашифрованном виде,
-
+    //**Конфигурирование  bcrypt пароля, чтобы хранить пароль в базе в зашифрованном виде,
     @Bean
-    public BCryptPasswordEncoder  bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
     //**Провайдер для сверки пароля, пароль проверяется с использованием хэша пароля

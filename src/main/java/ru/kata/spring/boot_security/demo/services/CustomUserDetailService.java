@@ -23,6 +23,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -39,6 +40,6 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map (r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 }

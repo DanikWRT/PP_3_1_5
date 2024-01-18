@@ -9,28 +9,13 @@
 
 <body class="container mt-5">
 <h1 class="text-center mb-4">Users table</h1>
-
-
-<!--<table class="table">-->
-<!--    <tr>-->
-<!--        <th scope="col" class="h5">Your id</th>-->
-<!--        <th scope="col" class="h5">Your email</th>-->
-<!--        <th scope="col" class="h5">Your first name</th>-->
-<!--        <th scope="col" class="h5">Your last name</th>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <td><p th:text="${user.getId()}" class="h6"> VALUE </p></td>-->
-<!--        <td><p th:text="${user.getEmail()}" class="h6"> VALUE </p></td>-->
-<!--        <td><p th:text="${user.getFirstName()}" class="h6"> VALUE </p></td>-->
-<!--        <td><p th:text="${user.getLastName()}" class="h6"> VALUE </p></td>-->
-<!--    </tr>-->
-<!--</table>-->
 <table class="table">
     <thead>
     <tr>
         <th scope="col">Id</th>
         <th scope="col">UserName</th>
-        <th scope="col">Password</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
         <th scope="col">Email</th>
         <th scope="col">Actions</th>
     </tr>
@@ -39,17 +24,14 @@
     <tr th:each="user: ${users}">
         <td th:text="${user.getId}"></td>
         <td th:text="${user.getUsername()}"></td>
-        <td th:text="${user.getPassword()}"></td>
+        <td th:text="${user.getFirstName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
         <td th:text="${user.getEmail}"></td>
         <td>
             <a class="btn btn-primary" th:href="@{/admin/user/{id}(id=${user.id})}">Edit User</a>
             <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
         </td>
         <td>
-<!--            <form th:method="POST" th:action="@{/admin/delete/{id}(id=${user.id})}">-->
-<!--                <input type="hidden" name="_method" value="DELETE"/>-->
-<!--                <button type="submit" class="btn btn-danger">Delete</button>-->
-<!--            </form>-->
 
         </td>
     </tr>

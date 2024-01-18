@@ -1,4 +1,5 @@
 package ru.kata.spring.boot_security.demo.etities;
+
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 

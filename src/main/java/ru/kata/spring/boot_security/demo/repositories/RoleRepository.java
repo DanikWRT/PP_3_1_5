@@ -5,5 +5,4 @@ import ru.kata.spring.boot_security.demo.etities.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Role findByName(String name);
-
 }
