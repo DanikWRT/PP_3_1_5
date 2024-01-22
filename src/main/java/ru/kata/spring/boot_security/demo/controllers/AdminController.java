@@ -1,9 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +53,7 @@ public class AdminController {
     }
 
     @GetMapping("/user/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id, Model roles) {
+    public String showEditUser(Model model, @PathVariable("id") Long id, Model roles) {
         roles.addAttribute("listRoles", roleService.getListRoles());
         model.addAttribute("user", userService.getUserById(id));
         return "edit";
@@ -72,7 +69,7 @@ public class AdminController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public String deleteUser(@PathVariable("id") Long id) {
         this.userService.deleteUser(id);
         return "redirect:/admin/user";
     }

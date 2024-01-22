@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.etities.Role;
 import ru.kata.spring.boot_security.demo.etities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -24,14 +25,10 @@ public class CustomUserDetailService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
