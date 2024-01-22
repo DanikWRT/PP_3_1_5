@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.services;
+package ru.kata.spring.boot_security.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
+public class DatabaseUserDetailService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired

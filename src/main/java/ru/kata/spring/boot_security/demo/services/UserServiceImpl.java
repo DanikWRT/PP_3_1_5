@@ -8,7 +8,6 @@ import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 
-
 import java.util.List;
 
 
@@ -41,6 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
     @Transactional
     @Override
     public void deleteUser(Long userId) {

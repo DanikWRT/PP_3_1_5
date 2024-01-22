@@ -24,7 +24,6 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-
     @GetMapping("/user")
     public String getUsers(Model model) {
         model.addAttribute("users", userService.getUsers());

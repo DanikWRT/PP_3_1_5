@@ -1,8 +1,6 @@
 package ru.kata.spring.boot_security.demo.entities;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,7 +12,7 @@ import java.util.Collection;
 @Entity
 @Data //Все основные геттеры и сеттеры от ломбок, реализация Equals, hashcode и.т.д...
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,31 +30,6 @@ public class User implements UserDetails {
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
-
     //getPassword и getUsername реализованы в ломбок
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles(); //getRoles нам сделал ломбок по приватному полю roles
-    }
 
-    // Пока не реализуем Срок годности аккаунта, блокировку или включени/выключение
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
