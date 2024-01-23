@@ -33,4 +33,15 @@ public class User {
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
     //getPassword и getUsername реализованы в ломбок
+
+    public User(String username, String password, String email, String firstName, String lastName) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User() {
+    }
 }
