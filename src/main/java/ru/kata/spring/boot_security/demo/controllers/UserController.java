@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +19,6 @@ public class UserController {
     @GetMapping("/user")
     public String showUser(Model model, Principal principal) {
         User user = userService.getUserByName(principal.getName());
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User %s not found", principal.getName()));
-        }
         model.addAttribute("user", user);
         return "user";
     }
