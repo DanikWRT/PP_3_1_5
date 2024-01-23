@@ -1,12 +1,14 @@
 package ru.kata.spring.boot_security.demo.entities;
 
 import lombok.Data;
+import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -31,5 +33,4 @@ public class User {
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
     //getPassword и getUsername реализованы в ломбок
-
 }

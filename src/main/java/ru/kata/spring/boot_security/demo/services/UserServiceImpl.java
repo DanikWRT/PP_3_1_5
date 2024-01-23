@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Transactional(readOnly = true)
@@ -64,11 +66,17 @@ public class UserServiceImpl implements UserService {
             if (!existingUser.getPassword().equals(user.getPassword())) {
                 existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             }
+        } else {
+                throw new UsernameNotFoundException(String.format("User with id: %s not found", id));
         }
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        User existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser == null) {
+            throw new UsernameNotFoundException(String.format("User with id: %s not found", id));
+        }
+        return existingUser;
     }
 }
