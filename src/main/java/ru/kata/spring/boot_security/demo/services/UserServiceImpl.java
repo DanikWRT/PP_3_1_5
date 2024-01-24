@@ -1,18 +1,14 @@
 package ru.kata.spring.boot_security.demo.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Transactional(readOnly = true)
 @Service
@@ -20,8 +16,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -30,7 +26,8 @@ public class UserServiceImpl implements UserService {
     public User getUserByName(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("User %s not found", username));
+            throw new UsernameNotFoundException(
+                    String.format("User %s not found", username));
         }
         return user;
     }
@@ -64,10 +61,12 @@ public class UserServiceImpl implements UserService {
             existingUser.setEmail(user.getEmail());
             existingUser.setRoles(user.getRoles());
             if (!existingUser.getPassword().equals(user.getPassword())) {
-                existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                existingUser.setPassword(
+                        bCryptPasswordEncoder.encode(user.getPassword()));
             }
         } else {
-                throw new UsernameNotFoundException(String.format("User with id: %s not found", id));
+            throw new UsernameNotFoundException(
+                    String.format("User with id: %s not found", id));
         }
     }
 
@@ -75,7 +74,8 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser == null) {
-            throw new UsernameNotFoundException(String.format("User with id: %s not found", id));
+            throw new UsernameNotFoundException(
+                    String.format("User with id: %s not found", id));
         }
         return existingUser;
     }

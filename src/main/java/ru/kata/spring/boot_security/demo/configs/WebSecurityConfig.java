@@ -24,7 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void setCustomUserDetailService(DatabaseUserDetailService databaseUserDetailService) {
+    public void setCustomUserDetailService(
+            DatabaseUserDetailService databaseUserDetailService) {
         this.databaseUserDetailService = databaseUserDetailService;
     }
 
@@ -36,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
-                //.antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN")
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
@@ -45,29 +45,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    //**Конфигурирование  bcrypt пароля, чтобы хранить пароль в базе в зашифрованном виде,
+//**Конфигурирование  bcrypt пароля, чтобы хранить пароль в базе в
+//зашифрованном виде,
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    //**Провайдер для сверки пароля, пароль проверяется с использованием хэша пароля
-
-    //Здесь мы реализовали daoAuthenticationProvider, с использованием логики из
+//**Провайдер для сверки пароля, пароль проверяется с использованием хэша
+//пароля
+//Здесь мы реализовали daoAuthenticationProvider, с использованием логики из
 //    customUserDetailService
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authenticationProvider =
+                new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
         authenticationProvider.setUserDetailsService(databaseUserDetailService);
         return authenticationProvider;
     }
-//    @Bean для thymeleaf-extras-springsecurity4, для быстрого получения ролей или пользователей
+//    @Bean для thymeleaf-extras-springsecurity4, для быстрого получения
+//    ролей или пользователей
     @Bean
-    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+    public SpringTemplateEngine templateEngine(
+            ITemplateResolver templateResolver) {
         final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
-        templateEngine.addDialect(new SpringSecurityDialect()); // Enable use of "sec"
+        templateEngine.addDialect(
+                new SpringSecurityDialect()); // Enable use of "sec"
         return templateEngine;
-}
-
+    }
 }

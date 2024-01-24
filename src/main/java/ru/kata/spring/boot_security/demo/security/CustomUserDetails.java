@@ -1,10 +1,9 @@
 package ru.kata.spring.boot_security.demo.security;
 
+import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.entities.User;
-
-import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
     private final User user;
@@ -28,7 +27,8 @@ public class CustomUserDetails implements UserDetails {
         return user.getUsername();
     }
 
-    // Пока не реализуем Срок годности аккаунта, блокировку или включени/выключение
+    // Пока не реализуем Срок годности аккаунта, блокировку или
+    // включени/выключение
     @Override
     public boolean isAccountNonExpired() {
         return true;
