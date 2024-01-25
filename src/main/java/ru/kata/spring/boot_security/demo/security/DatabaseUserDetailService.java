@@ -22,6 +22,7 @@ public class DatabaseUserDetailService implements UserDetailsService {
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username)

@@ -1,11 +1,15 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import javax.validation.Valid;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.User;
+import ru.kata.spring.boot_security.demo.security.CustomUserDetails;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
@@ -21,8 +25,9 @@ public class AdminController {
     }
 
     @GetMapping("/user")
-    public String getUsers(Model model) {
+    public String getUsers(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("users", userService.getUsers());
+        model.addAttribute("user", userDetails);
         return "users";
     }
 
@@ -35,6 +40,7 @@ public class AdminController {
     @GetMapping("/new")
     public String showAddUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("listRoles", roleService.getListRoles());
+        model.addAttribute("user", user);
         return "new";
     }
 
