@@ -9,20 +9,30 @@
 </head>
 
 <body>
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <p class="navbar-brand text-white">
-            <b><span class="align-middle" th:text="${user.getUsername()}"></span></b>
-            <span class="align-middle">with roles:</span>
-            <span class="align-middle" th:object="${user}" th:each="role,iterStat: ${user.getRoles()} "
-                  th:text="${role.name}+ ${iterStat.last ? '' : ', '}" ></span>
-
-        </p>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
-        </form>
-    </div>
-</nav>
+<header>
+    <nav class="navbar navbar-light bg-dark">
+        <div class="container-fluid">
+            <div>
+                <div class="text-white me-auto d-inline-block">
+                    <strong class="text-white" style="font-size: 1.5em" th:utext="${user.getUsername()}">
+                        Username@mail.ru
+                    </strong>
+                </div>
+                <div class="text-white me-auto d-inline-block">
+                    <span class="text-white" style="font-size: 1.5em">with roles: </span>
+                </div>
+                <div class="text-white me-auto d-inline-block" th:each="role, iterStat: ${user.getRoles()}">
+                    <span class="text-white" style="font-size: 1.5em"
+                          th:text="${role.getName().replace('ROLE_','')} + ${iterStat.last ? '' : ', '}">
+                    </span>
+                </div>
+            </div>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-dark text-secondary">Logout</button>
+            </form>
+        </div>
+    </nav>
+</header>
 
 <section>
     <div class="container-fluid">
@@ -57,7 +67,7 @@
         <td><p th:text="${user.getLastName()}" class="h6"> VALUE </p></td>
         <td>
             <span th:object="${user}" th:each="role,iterStat: ${user.getRoles()} "
-                  th:text="${role.name}+ ${iterStat.last ? '' : ', '}" > VALUE</span>
+                  th:text="${role.name} + ${iterStat.last ? '' : ', '}" > VALUE</span>
         </td>
     </tr>
 </table>

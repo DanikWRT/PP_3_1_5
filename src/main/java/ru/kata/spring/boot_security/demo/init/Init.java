@@ -25,17 +25,20 @@ public class Init {
     private void initializedDataBase() {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
+        Role roleBadUser = new Role("ROLE_BAD_USER");
         roleService.saveRole(roleAdmin);
         roleService.saveRole(roleUser);
+        roleService.saveRole(roleBadUser);
         Set<Role> adminRoleSet = new HashSet<>();
         Set<Role> userRoleSet = new HashSet<>();
         System.out.println(adminRoleSet.add(roleAdmin));
         System.out.println(adminRoleSet.add(roleUser));
+        System.out.println(adminRoleSet.add(roleBadUser));
         System.out.println(userRoleSet.add(roleUser));
         User admin = new User(
                 "adminchik", "100", "admin@kata.ru", "Администратор", "Админский");
         User admin2 = new User("admin", "admin", "admin@kata.ru",
-                "АдминистраторВсеяАдминов", "Админский");
+                "Веролом", "МаминСын");
         User user1 =
                 new User("user", "user", "user@kata.ru", "Пользователь", "Такойто");
         User user2 = new User(
