@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,15 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public void saveRole(Role role) {
         roleRepository.save(role);
+    }
+
+    @Override
+    public List<Role> listByRole(List<String> names) {
+        List<Role> roles = new ArrayList<>();
+        List<Role> listRoles = getListRoles();
+        for (String name : names) {
+            listRoles.stream().filter(role -> role.getName().contains(name)).forEach(roles::add);
+        }
+        return roles;
     }
 }

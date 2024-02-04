@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.security;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 
 @Service
 public class DatabaseUserDetailService implements UserDetailsService {
@@ -27,14 +29,14 @@ public class DatabaseUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.orElse(null) == null) {
             throw new UsernameNotFoundException(
                     String.format("User '%s' not found", username));
         }
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
+                user.get().getUsername(), user.get().getPassword(),
+                mapRolesToAuthorities(user.get().getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(

@@ -6,4 +6,5 @@ import ru.kata.spring.boot_security.demo.entities.Role;
 public interface RoleService {
     List<Role> getListRoles();
     void saveRole(Role role);
+    public List<Role> listByRole(List<String> names);
 }

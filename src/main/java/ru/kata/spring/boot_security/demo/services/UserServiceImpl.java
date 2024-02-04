@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 
 @Transactional(readOnly = true)
 @Service
@@ -24,12 +26,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByName(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(
-                    String.format("User %s not found", username));
-        }
-        return user;
+        Optional<User> userOne = userRepository.findByUsername(username);
+
+        //        if (userOne == null) {
+//            throw new UsernameNotFoundException(
+//                    String.format("User %s not found", username));
+//        }
+        return userOne.orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -72,11 +75,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        User existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser == null) {
-            throw new UsernameNotFoundException(
-                    String.format("User with id: %s not found", id));
-        }
-        return existingUser;
+        Optional<User> foundUser = userRepository.findById(id);
+        return foundUser.orElseThrow(UserNotFoundException::new);
     }
+
 }
