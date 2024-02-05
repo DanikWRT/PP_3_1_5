@@ -31,6 +31,7 @@ public class MainRestController {
         this.userService = userService;
         this.roleService = roleService;
     }
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
@@ -40,20 +41,22 @@ public class MainRestController {
     public ResponseEntity<List<Role>> getRole() {
         return new ResponseEntity<>(roleService.getListRoles(), HttpStatus.OK);
     }
+
     @GetMapping("/info")
-    public ResponseEntity<User> getPrincipal (Principal principal) {
+    public ResponseEntity<User> getPrincipal(Principal principal) {
         return new ResponseEntity<>(userService.getUserByName(principal.getName()), HttpStatus.OK);
     }
+
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getOneUser (@PathVariable("id") Long id) {
+    public ResponseEntity<User> getOneUser(@PathVariable("id") Long id) {
         //exeption перехватывает @ExceptionHandler если ловит HTTPStatus.BAD_REQUEST
-        return new ResponseEntity<>( userService.getUserById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
         //Jackson конвертирует в JSON
     }
 
     @PostMapping("/create")
-    public ResponseEntity<User> creatRestUser (@RequestBody @Valid User user,
-                                               BindingResult bindingResult) {
+    public ResponseEntity<User> creatRestUser(@RequestBody @Valid User user,
+                                              BindingResult bindingResult) {
         errorMessageBildering(user, bindingResult);
         userService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -77,11 +80,12 @@ public class MainRestController {
 
     @PatchMapping("/update")
     public ResponseEntity<User> updateRestUser(@RequestBody User user
-                                                ,BindingResult bindingResult) {
+            , BindingResult bindingResult) {
         errorMessageBildering(user, bindingResult);
         userService.editUser(user.getId(), user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteRestUser(@PathVariable Long id) {
         userService.deleteUser(id);
@@ -97,6 +101,7 @@ public class MainRestController {
         // В HTTP ответе тело ответа (response) и статус в заголовке
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler
     private ResponseEntity<UsersErrorResponse> handleException(UserNotCreatedException e) {
         UsersErrorResponse response = new UsersErrorResponse(

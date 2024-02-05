@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.services;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,11 +28,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByName(String username) {
         Optional<User> userOne = userRepository.findByUsername(username);
-
-        //        if (userOne == null) {
-//            throw new UsernameNotFoundException(
-//                    String.format("User %s not found", username));
-//        }
         return userOne.orElseThrow(UserNotFoundException::new);
     }
 

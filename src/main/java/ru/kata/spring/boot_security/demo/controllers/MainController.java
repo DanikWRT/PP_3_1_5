@@ -9,6 +9,7 @@ public class MainController {
     public String adminPage() {
         return "admin-page";
     }
+
     @GetMapping("/user")
     public String userPage() {
         return "admin-page";
