@@ -16,6 +16,9 @@ public class Role {
     }
     public Role() {}
 
+    public String getWithoutPrefix() { //для JS, чтобы отображать без префикса, рубит "ROLE_"
+        return name.substring(5);
+    }
     @Override
     public String toString() {
         return "Role{" +
